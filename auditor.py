@@ -18,3 +18,5 @@ while True:
         print("Invalid input. Do not put in negative numbers for stock quantity.")
         failed_entries += 1
         continue
+
+    inventory += quantity
