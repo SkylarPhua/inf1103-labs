@@ -1,29 +1,30 @@
 inventory = 0
 failed_entries = 0
 
-while True:
+def get_valid_input():
     user_input = input("Enter stock quantity or Enter 'quit' to exit: ")
 
     if user_input.lower() == "quit":
-        break
+        return "quit"
 
     if not user_input.lstrip("-").isdigit():
         print("Invalid input. Please enter a valid stock quantity (Integer).")
-        failed_entries += 1
-        continue
+        return None
 
     quantity = int(user_input)
 
     if quantity < 0:
         print("Invalid input. Do not put in negative numbers for stock quantity.")
-        failed_entries += 1
-        continue
+        return None
 
-    inventory += quantity
+    return quantity
 
-    if inventory > 500:
-        print("Overstock Alert! Inventory has exceeded 500 units.")
+while True:
+    value = get_valid_input()
+
+    if value == "quit":
         break
 
-print("Total Units Processed:", inventory)
-print("Number of Failed/Rejected Entries:", failed_entries)
+    elif value is None:
+        failed_entries += 1
+        continue
