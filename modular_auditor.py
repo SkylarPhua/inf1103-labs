@@ -19,6 +19,11 @@ def get_valid_input():
 
     return quantity
 
+def process_delivery(current_total, new_value):
+    new_total = current_total + new_value
+
+    return new_total
+
 while True:
     value = get_valid_input()
 
@@ -28,3 +33,6 @@ while True:
     elif value is None:
         failed_entries += 1
         continue
+
+    else:
+        inventory = process_delivery(inventory, value)
