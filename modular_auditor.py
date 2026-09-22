@@ -1,5 +1,6 @@
 inventory = 0
 failed_entries = 0
+deliveries_processed = 0
 
 def get_valid_input():
     user_input = input("Enter stock quantity or Enter 'quit' to exit: ")
@@ -29,10 +30,16 @@ def calculate_tax(amount):
 
     return tax
 
+def generate_report(total_units, failed_attempts, deliveries_processed):
+    print("Total Units Processed:", total_units)
+    print("Total Deliveries Processed:", deliveries_processed)
+    print("Number of Failed/Rejected Entries:", failed_attempts)
+
 while True:
     value = get_valid_input()
 
     if value == "quit":
+        generate_report(inventory, failed_entries, deliveries_processed)
         break
 
     elif value is None:
@@ -42,4 +49,9 @@ while True:
     else:
         inventory = process_delivery(inventory, value)
         tax = calculate_tax(value)
+        deliveries_processed += 1
         print("Tax for this delivery:", tax)
+
+        if inventory > 500:
+                print("Overstock Alert! Inventory has exceeded 500 units.")
+                break
