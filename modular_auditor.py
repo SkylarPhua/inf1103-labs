@@ -24,6 +24,11 @@ def process_delivery(current_total, new_value):
 
     return new_total
 
+def calculate_tax(amount):
+    tax = amount * 0.10
+
+    return tax
+
 while True:
     value = get_valid_input()
 
@@ -36,3 +41,5 @@ while True:
 
     else:
         inventory = process_delivery(inventory, value)
+        tax = calculate_tax(value)
+        print("Tax for this delivery:", tax)
