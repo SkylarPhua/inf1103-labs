@@ -46,6 +46,23 @@ def load_inventory():
         return 0, [], []
 
 
+def save_inventory(total_inventory, transaction_history, orders):
+    with open("inventory.txt", "w") as file:
+        file.write(str(total_inventory) + "\n")
+
+        file.write("TRANSACTION_HISTORY\n")
+
+        for transaction in transaction_history:
+            file.write(str(transaction) + "\n")
+
+        file.write("ORDERS\n")
+
+        for order in orders:
+            file.write(str(order[0]) + "," + order[1] + "," + str(order[2]) + "\n")
+
+    print("\nInventory successfully saved to inventory.txt")
+
+
 inventory, transaction_history, orders = load_inventory()
 failed_entries = 0
 deliveries_processed = 0
@@ -95,7 +112,7 @@ def calculate_tax(amount):
 def generate_report(total_units, failed_attempts, deliveries_processed):
     print("\nTotal Units Processed:", total_units)
     print("Total Deliveries Processed:", deliveries_processed)
-    print("Number of Failed/Rejected Entries:", failed_attempts)
+    print("Number of Failed/Rejected Entries:", failed_attempts, "\n")
 
 
 display_orders(orders)
@@ -130,6 +147,7 @@ while True:
     product_name = get_product_name()
 
     if product_name == "quit":
+        save_inventory(inventory, transaction_history, orders)
         generate_report(inventory, failed_entries, deliveries_processed)
         break
 
@@ -140,6 +158,8 @@ while True:
     value = get_valid_input()
 
     if value == "quit":
+        print("\nOrder cancelled. No changes were made.")
+        save_inventory(inventory, transaction_history, orders)
         generate_report(inventory, failed_entries, deliveries_processed)
         break
 
