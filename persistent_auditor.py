@@ -190,4 +190,6 @@ while True:
 
         if inventory > 500:
             print("Overstock Alert! Inventory has exceeded 500 units.")
+            save_inventory(inventory, transaction_history, orders)
+            generate_report(inventory, failed_entries, deliveries_processed)
             break
