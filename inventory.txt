@@ -1,11 +1,15 @@
-8
+14
 TRANSACTION_HISTORY
 2
 1
 3
 2
+2
+4
 ORDERS
 1001,Wireless Mouse,2
 1002,Keyboard,1
 1003,USB Cable,3
 1004,laptop stand,2
+1005,Keyboard,2
+1006,Monitor Stand,4
