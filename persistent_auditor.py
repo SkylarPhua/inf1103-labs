@@ -4,25 +4,51 @@ def load_inventory():
             lines = file.readlines()
 
             if len(lines) == 0:
-                return 0, []
+                return 0, [], []
 
             inventory = int(lines[0].strip())
+
             transaction_history = []
+            orders = []
+
+            reading_orders = False
 
             for line in lines[1:]:
-                transaction_history.append(int(line.strip()))
+                line = line.strip()
 
-            return inventory, transaction_history
+                if line == "TRANSACTION_HISTORY":
+                    continue
+
+                elif line == "ORDERS":
+                    reading_orders = True
+                    continue
+
+                elif line == "":
+                    continue
+
+                if reading_orders == False:
+                    transaction_history.append(int(line))
+
+                else:
+                    order_data = line.split(",")
+
+                    order_id = int(order_data[0])
+                    product_name = order_data[1]
+                    quantity = int(order_data[2])
+
+                    order = [order_id, product_name, quantity]
+
+                    orders.append(order)
+
+            return inventory, transaction_history, orders
 
     except FileNotFoundError:
-        return 0, []
+        return 0, [], []
 
 
-inventory, transaction_history = load_inventory()
+inventory, transaction_history, orders = load_inventory()
 failed_entries = 0
 deliveries_processed = 0
-
-orders = []
 
 
 def display_orders(orders):
