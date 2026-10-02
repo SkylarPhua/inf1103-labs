@@ -18,6 +18,15 @@ def load_inventory():
         return []
 
 
+def save_inventory(inventory):
+    print("\nSaving inventory...")
+
+    with open("inventory.json", "w") as file:
+        json.dump(inventory, file)
+
+    print("Inventory saved successfully to inventory.json.")
+
+
 inventory = load_inventory()
 
 
@@ -122,3 +131,6 @@ def search_product(inventory):
             return
 
     print("Product not found.\n")
+
+
+display_all(inventory)
