@@ -103,6 +103,20 @@ def search_product(inventory):
         print("Product not found.")
 
 
+def save_inventory(inventory):
+    print("\nSaving inventory...")
+
+    data = []
+
+    for product in inventory.get_products():
+        data.append(product.to_dict())
+
+    with open("inventory.json", "w") as file:
+        json.dump(data, file)
+
+    print("Inventory saved successfully to inventory.json.")
+
+
 inventory = load_inventory()
 
 while True:
@@ -133,10 +147,12 @@ while True:
         search_product(inventory)
 
     elif option == "5":
-        print("Save inventory will be implemented next.")
+        save_inventory(inventory)
 
     elif option == "6":
-        print("Program terminated.")
+        save_inventory(inventory)
+        print("Thank you for using Inventory Management System.")
+        print("Program terminated.\n")
         break
 
     else:

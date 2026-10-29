@@ -20,3 +20,6 @@ class Inventory:
             product.display_information()
 
         print("------------------------------------------------")
+
+    def get_products(self):
+        return self.__products
