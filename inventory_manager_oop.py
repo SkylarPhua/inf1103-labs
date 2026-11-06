@@ -2,6 +2,8 @@ import json
 
 from product import Product
 from inventory import Inventory
+from physical_product import PhysicalProduct
+from digital_product import DigitalProduct
 
 
 def load_inventory():
@@ -15,14 +17,28 @@ def load_inventory():
         print("Inventory loaded successfully.")
 
         for product_data in data:
-            product = Product(
-                product_data["id"],
-                product_data["name"],
-                product_data["price"],
-                product_data["stock"],
-            )
+            product_type = product_data["type"]
+
+            if product_type == "physical":
+                product = PhysicalProduct(
+                    product_data["id"],
+                    product_data["name"],
+                    product_data["price"],
+                    product_data["stock"],
+                    product_data["weight"],
+                )
+
+            elif product_type == "digital":
+                product = DigitalProduct(
+                    product_data["id"],
+                    product_data["name"],
+                    product_data["price"],
+                    product_data["stock"],
+                    product_data["download_size"],
+                )
 
             inventory.add_product(product)
+
     except FileNotFoundError:
         print("inventory.json not found.")
         print("Starting with an empty inventory.")
