@@ -1,6 +1,5 @@
 import json
 
-from product import Product
 from inventory import Inventory
 from physical_product import PhysicalProduct
 from digital_product import DigitalProduct
@@ -69,7 +68,55 @@ def add_product(inventory):
         print("Invalid input. Price and stock cannot be negative.")
         return
 
-    product = Product(product_id, product_name, price, stock)
+    print("\nProduct Type")
+    print("1. Physical Product")
+    print("2. Digital Product")
+
+    product_type = input("Select product type: ")
+
+    if product_type == "1":
+        try:
+            weight = float(input("Weight (kg): "))
+
+        except ValueError:
+            print("Invalid input. Weight must be a number.")
+            return
+
+        if weight < 0:
+            print("Invalid input. Weight cannot be negative.")
+            return
+
+        product = PhysicalProduct(
+            product_id,
+            product_name,
+            price,
+            stock,
+            weight,
+        )
+
+    elif product_type == "2":
+        try:
+            download_size = float(input("Download Size (MB): "))
+
+        except ValueError:
+            print("Invalid input. Download size must be a number.")
+            return
+
+        if download_size < 0:
+            print("Invalid input. Download size cannot be negative.")
+            return
+
+        product = DigitalProduct(
+            product_id,
+            product_name,
+            price,
+            stock,
+            download_size,
+        )
+
+    else:
+        print("Invalid product type.")
+        return
 
     inventory.add_product(product)
 
