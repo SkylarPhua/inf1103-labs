@@ -3,6 +3,12 @@ from physical_product import PhysicalProduct
 from digital_product import DigitalProduct
 from inventory import Inventory
 from order import Order
+from product import Product
+
+
+def show_product_details(product: Product) -> None:
+    product.display_information()
+    print(product.get_fulfilment_info())
 
 
 supplier = Supplier(
@@ -44,7 +50,7 @@ print(
     physical_product.supplier is digital_product.supplier,
 )
 
-#-------------------Test for Prediction 2---------------------
+# -------------------Test for Prediction 2---------------------
 print("\n--- INVENTORY AGGREGATION TEST ---")
 
 # physical_product already exists before either inventory is created.
@@ -75,7 +81,7 @@ print(
     inventory_b.find_product("P010") is physical_product,
 )
 
-#-------------------Test for Prediction 3---------------------
+# -------------------Test for Prediction 3---------------------
 print("\n--- ORDER COMPOSITION TEST ---")
 
 order_a = Order("O001")
@@ -117,3 +123,20 @@ print("Order B line count:", len(order_b.order_lines))
 
 print("\nThe referenced Product still works:")
 physical_product.display_information()
+
+
+print("\n--- LSP AND POLYMORPHISM TEST ---")
+
+mixed_inventory = Inventory()
+mixed_inventory.add_product(physical_product)
+mixed_inventory.add_product(digital_product)
+
+for product in mixed_inventory.get_products():
+    show_product_details(product)
+
+    product.update_stock(7)
+    print("Stock after update_stock(7):", product.to_dict()["stock"])
+
+    product.update_stock(0)
+    print("Stock after update_stock(0):", product.to_dict()["stock"])
+    print()
