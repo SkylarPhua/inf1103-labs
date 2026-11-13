@@ -32,6 +32,7 @@ class Product(ABC):
             "| Stock:",
             self.__stock,
         )
+        self.supplier.display_information()
 
     def to_dict(self) -> dict[str, str | float | int | dict[str, str]]:
         return {
