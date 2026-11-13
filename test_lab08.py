@@ -2,6 +2,7 @@ from supplier import Supplier
 from physical_product import PhysicalProduct
 from digital_product import DigitalProduct
 from inventory import Inventory
+from order import Order
 
 
 supplier = Supplier(
@@ -73,3 +74,46 @@ print(
     "\nInventory B contains the same product object:",
     inventory_b.find_product("P010") is physical_product,
 )
+
+#-------------------Test for Prediction 3---------------------
+print("\n--- ORDER COMPOSITION TEST ---")
+
+order_a = Order("O001")
+order_b = Order("O002")
+
+# Each order creates its own line for the same existing product.
+order_a.add_order_line(physical_product, 2)
+order_b.add_order_line(physical_product, 1)
+
+print(
+    "Both orders share the same Product:",
+    order_a.order_lines[0].product is order_b.order_lines[0].product,
+)
+
+print(
+    "Both orders share the same OrderLine:",
+    order_a.order_lines[0] is order_b.order_lines[0],
+)
+
+print("\nOrder A: two OrderLines after adding the digital product")
+order_a.add_order_line(digital_product, 3)
+
+for line in order_a.order_lines:
+    print(
+        f"Product: {line.product.get_product_id()}"
+        f" | Quantity: {line.quantity}"
+        f" | Subtotal: ${line.calculate_subtotal():.2f}"
+    )
+
+print(f"Order A total: ${order_a.calculate_total():.2f}")
+
+# Index 0 is Order A's physical-product line.
+order_a.remove_order_line(0)
+
+print("\nAfter removing Order A's first line:")
+print("Order A line count:", len(order_a.order_lines))
+print(f"Order A total: ${order_a.calculate_total():.2f}")
+print("Order B line count:", len(order_b.order_lines))
+
+print("\nThe referenced Product still works:")
+physical_product.display_information()
