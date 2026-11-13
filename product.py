@@ -33,12 +33,13 @@ class Product(ABC):
             self.__stock,
         )
 
-    def to_dict(self) -> dict[str, str | float | int]:
+    def to_dict(self) -> dict[str, str | float | int | dict[str, str]]:
         return {
             "id": self.__product_id,
             "name": self.__name,
             "price": self.__price,
             "stock": self.__stock,
+            "supplier": self.supplier.to_dict(),
         }
 
     @abstractmethod

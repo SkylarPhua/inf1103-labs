@@ -13,7 +13,7 @@ class DigitalProduct(Product):
     def get_fulfilment_info(self) -> str:
         return "This product is delivered digitally."
 
-    def to_dict(self) -> dict[str, str | float | int]:
+    def to_dict(self) -> dict[str, str | float | int | dict[str, str]]:
         data = super().to_dict()
         data["type"] = "digital"
         data["download_size"] = self.__download_size

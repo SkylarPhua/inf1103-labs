@@ -3,6 +3,7 @@ import json
 from inventory import Inventory
 from physical_product import PhysicalProduct
 from digital_product import DigitalProduct
+from supplier import Supplier
 
 
 def load_inventory():
@@ -17,6 +18,13 @@ def load_inventory():
 
         for product_data in data:
             product_type = product_data["type"]
+            supplier_data = product_data["supplier"]
+
+            supplier = Supplier(
+                supplier_data["supplier_id"],
+                supplier_data["name"],
+                supplier_data["contact_email"],
+            )
 
             if product_type == "physical":
                 product = PhysicalProduct(
@@ -25,6 +33,7 @@ def load_inventory():
                     product_data["price"],
                     product_data["stock"],
                     product_data["weight"],
+                    supplier,
                 )
 
             elif product_type == "digital":
@@ -34,6 +43,7 @@ def load_inventory():
                     product_data["price"],
                     product_data["stock"],
                     product_data["download_size"],
+                    supplier,
                 )
 
             inventory.add_product(product)
@@ -47,6 +57,12 @@ def load_inventory():
 
 def add_product(inventory):
     print("\nAdd New Product")
+
+    supplier = Supplier(
+        input("Supplier ID: ").strip().upper(),
+        input("Supplier Name: ").strip(),
+        input("Supplier Email: ").strip(),
+    )
 
     product_id = input("Product ID: ").strip().upper()
 
@@ -92,6 +108,7 @@ def add_product(inventory):
             price,
             stock,
             weight,
+            supplier,
         )
 
     elif product_type == "2":
@@ -112,6 +129,7 @@ def add_product(inventory):
             price,
             stock,
             download_size,
+            supplier,
         )
 
     else:

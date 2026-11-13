@@ -15,3 +15,10 @@ class Supplier:
             f" | Name: {self.name}"
             f" | Email: {self.contact_email}"
         )
+
+    def to_dict(self) -> dict[str, str]:
+        return {
+            "supplier_id": self.supplier_id,
+            "name": self.name,
+            "contact_email": self.contact_email,
+        }
