@@ -6,23 +6,23 @@ class Product(ABC):
     def __init__(
         self, product_id: str, name: str, price: float, stock: int, supplier: Supplier
     ) -> None:
-        self.__product_id = product_id
-        self.__name = name
-        self.__price = price
-        self.__stock = stock
+        self.__product_id: str = product_id
+        self.__name: str = name
+        self.__price: float = price
+        self.__stock: int = stock
         self.supplier: Supplier = supplier
 
     @property
     def price(self) -> float:
         return self.__price
 
-    def get_product_id(self):
+    def get_product_id(self) -> str:
         return self.__product_id
 
-    def update_stock(self, quantity):
+    def update_stock(self, quantity: int) -> None:
         self.__stock = quantity
 
-    def display_information(self):
+    def display_information(self) -> None:
         print(
             "ID:",
             self.__product_id,
@@ -33,7 +33,7 @@ class Product(ABC):
             self.__stock,
         )
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, str | float | int]:
         return {
             "id": self.__product_id,
             "name": self.__name,
@@ -42,5 +42,5 @@ class Product(ABC):
         }
 
     @abstractmethod
-    def get_fulfilment_info(self):
+    def get_fulfilment_info(self) -> str:
         pass

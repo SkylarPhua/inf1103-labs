@@ -1,19 +1,15 @@
 from product import Product
 class Inventory:
-    def __init__(self):
+    def __init__(self) -> None:
         self.__products: list[Product] = []
 
     def add_product(self, product: Product) -> None:
         self.__products.append(product)
 
     def search_product(self, product_id: str) -> Product | None:
-        for product in self.__products:
-            if product.get_product_id() == product_id:
-                return product
+        return self.find_product(product_id)
 
-        return None
-
-    def display_all(self):
+    def display_all(self) -> None:
         print("\nCurrent Inventory")
         print("------------------------------------------------")
 
@@ -22,7 +18,7 @@ class Inventory:
 
         print("------------------------------------------------")
 
-    def get_products(self):
+    def get_products(self) -> list[Product]:
         return self.__products
 
     def find_product(self, product_id: str) -> Product | None:
