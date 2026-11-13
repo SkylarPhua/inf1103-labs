@@ -6,7 +6,7 @@ from digital_product import DigitalProduct
 from supplier import Supplier
 
 
-def load_inventory():
+def load_inventory() -> Inventory:
     inventory = Inventory()
 
     try:
@@ -55,7 +55,7 @@ def load_inventory():
     return inventory
 
 
-def add_product(inventory):
+def add_product(inventory: Inventory) -> None:
     print("\nAdd New Product")
 
     supplier = Supplier(
@@ -141,7 +141,7 @@ def add_product(inventory):
     print("Product added successfully!")
 
 
-def update_stock(inventory):
+def update_stock(inventory: Inventory) -> None:
     print("\nUpdate Stock")
 
     product_id = input("Enter Product ID: ").strip().upper()
@@ -168,7 +168,7 @@ def update_stock(inventory):
         print("Product not found.")
 
 
-def search_product(inventory):
+def search_product(inventory: Inventory) -> None:
     print("\nSearch Product")
 
     product_id = input("Enter Product ID: ").strip().upper()
@@ -184,7 +184,7 @@ def search_product(inventory):
         print("Product not found.")
 
 
-def save_inventory(inventory):
+def save_inventory(inventory: Inventory) -> None:
     print("\nSaving inventory...")
 
     data = []
