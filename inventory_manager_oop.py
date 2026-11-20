@@ -1,9 +1,8 @@
 import json
 
 from inventory import Inventory
-from physical_product import PhysicalProduct
-from digital_product import DigitalProduct
 from supplier import Supplier
+from product_factory import ProductFactory
 
 
 def load_inventory() -> Inventory:
@@ -26,25 +25,16 @@ def load_inventory() -> Inventory:
                 supplier_data["contact_email"],
             )
 
-            if product_type == "physical":
-                product = PhysicalProduct(
-                    product_data["id"],
-                    product_data["name"],
-                    product_data["price"],
-                    product_data["stock"],
-                    product_data["weight"],
-                    supplier,
-                )
-
-            elif product_type == "digital":
-                product = DigitalProduct(
-                    product_data["id"],
-                    product_data["name"],
-                    product_data["price"],
-                    product_data["stock"],
-                    product_data["download_size"],
-                    supplier,
-                )
+            product = ProductFactory.create(
+                product_type,
+                product_data["id"],
+                product_data["name"],
+                product_data["price"],
+                product_data["stock"],
+                supplier,
+                weight=product_data.get("weight", 0.0),
+                download_size=product_data.get("download_size", 0.0),
+            )
 
             inventory.add_product(product)
 
@@ -102,13 +92,14 @@ def add_product(inventory: Inventory) -> None:
             print("Invalid input. Weight cannot be negative.")
             return
 
-        product = PhysicalProduct(
+        product = ProductFactory.create(
+            "physical",
             product_id,
             product_name,
             price,
             stock,
-            weight,
             supplier,
+            weight=weight,
         )
 
     elif product_type == "2":
@@ -123,13 +114,14 @@ def add_product(inventory: Inventory) -> None:
             print("Invalid input. Download size cannot be negative.")
             return
 
-        product = DigitalProduct(
+        product = ProductFactory.create(
+            "digital",
             product_id,
             product_name,
             price,
             stock,
-            download_size,
             supplier,
+            download_size=download_size,
         )
 
     else:
