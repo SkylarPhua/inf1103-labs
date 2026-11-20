@@ -1,9 +1,8 @@
 from supplier import Supplier
-from physical_product import PhysicalProduct
-from digital_product import DigitalProduct
 from inventory import Inventory
 from order import Order
 from product import Product
+from product_factory import ProductFactory
 
 
 def show_product_details(product: Product) -> None:
@@ -17,22 +16,24 @@ supplier = Supplier(
     "tech@example.com",
 )
 
-physical_product = PhysicalProduct(
+physical_product = ProductFactory.create(
+    "physical",
     "P010",
     "Gaming Mouse",
     120.00,
     10,
-    0.15,
     supplier,
+    weight=0.15,
 )
 
-digital_product = DigitalProduct(
+digital_product = ProductFactory.create(
+    "digital",
     "P011",
     "Antivirus Software",
     59.90,
     2,
-    500.0,
     supplier,
+    download_size=500.0,
 )
 
 print("Before deleting the supplier variable:")

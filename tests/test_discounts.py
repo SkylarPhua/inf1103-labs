@@ -4,7 +4,7 @@ from bulk_discount import BulkDiscount
 from no_discount import NoDiscount
 from order import Order
 from percentage_discount import PercentageDiscount
-from physical_product import PhysicalProduct
+from product_factory import ProductFactory
 from supplier import Supplier
 from student_discount import StudentDiscount
 
@@ -43,7 +43,15 @@ class DiscountTests(unittest.TestCase):
 
     def make_order(self) -> Order:
         supplier = Supplier("S001", "Tech Supplier", "tech@example.com")
-        product = PhysicalProduct("P100", "Test Product", 125.0, 10, 1.0, supplier)
+        product = ProductFactory.create(
+            "physical",
+            "P100",
+            "Test Product",
+            125.0,
+            10,
+            supplier,
+            weight=1.0,
+        )
 
         order = Order("O100")
         order.add_order_line(product, 2)
