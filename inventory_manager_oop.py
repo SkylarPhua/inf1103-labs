@@ -3,6 +3,7 @@ import json
 from inventory import Inventory
 from supplier import Supplier
 from product_factory import ProductFactory
+from input_helpers import get_positive_float
 
 
 def load_inventory() -> Inventory:
@@ -62,19 +63,17 @@ def add_product(inventory: Inventory) -> None:
 
     product_name = input("Product Name: ").strip()
 
+    price = get_positive_float("Price: ")
+
     try:
-        price = float(input("Price: "))
         stock = int(input("Stock Quantity: "))
 
     except ValueError:
-        print("Invalid input. Price must be a number and stock must be an integer.")
+        print("Invalid input. Stock must be an integer.")
         return
 
-    if price <= 0 or stock < 0:
-        print(
-            "Invalid input. Price must be greater than zero "
-            "and stock cannot be negative."
-        )
+    if stock < 0:
+        print("Invalid input. Stock cannot be negative.")
         return
 
     print("\nProduct Type")
