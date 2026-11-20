@@ -55,6 +55,24 @@ class DiscountTests(unittest.TestCase):
 
         self.assertAlmostEqual(order.calculate_total(), 237.50)
 
+    def test_orders_can_share_a_discount_strategy(self) -> None:
+        shared_discount = PercentageDiscount(10)
+
+        order_a = self.make_order()
+        order_b = Order("O200")
+
+        order_a.set_discount(shared_discount)
+        order_b.set_discount(shared_discount)
+
+        self.assertIs(order_a.discount, order_b.discount)
+        self.assertAlmostEqual(order_a.calculate_total(), 225.0)
+
+        # Changing Order A's reference does not change Order B's.
+        order_a.set_discount(NoDiscount())
+
+        self.assertEqual(order_a.calculate_total(), 250.0)
+        self.assertIs(order_b.discount, shared_discount)
+
 
 if __name__ == "__main__":
     unittest.main()
