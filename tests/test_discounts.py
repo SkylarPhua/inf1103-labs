@@ -6,6 +6,7 @@ from order import Order
 from percentage_discount import PercentageDiscount
 from physical_product import PhysicalProduct
 from supplier import Supplier
+from student_discount import StudentDiscount
 
 
 class DiscountTests(unittest.TestCase):
@@ -41,16 +42,18 @@ class DiscountTests(unittest.TestCase):
         self.assertAlmostEqual(order.calculate_total(), 225.0)
 
     def make_order(self) -> Order:
-        supplier = Supplier(
-            "S001", "Tech Supplier", "tech@example.com"
-        )
-        product = PhysicalProduct(
-            "P100", "Test Product", 125.0, 10, 1.0, supplier
-        )
+        supplier = Supplier("S001", "Tech Supplier", "tech@example.com")
+        product = PhysicalProduct("P100", "Test Product", 125.0, 10, 1.0, supplier)
 
         order = Order("O100")
         order.add_order_line(product, 2)
         return order
+
+    def test_student_discount_without_changing_order(self) -> None:
+        order = self.make_order()
+        order.set_discount(StudentDiscount())
+
+        self.assertAlmostEqual(order.calculate_total(), 237.50)
 
 
 if __name__ == "__main__":
