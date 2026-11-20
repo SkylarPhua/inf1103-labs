@@ -70,8 +70,11 @@ def add_product(inventory: Inventory) -> None:
         print("Invalid input. Price must be a number and stock must be an integer.")
         return
 
-    if price < 0 or stock < 0:
-        print("Invalid input. Price and stock cannot be negative.")
+    if price <= 0 or stock < 0:
+        print(
+            "Invalid input. Price must be greater than zero "
+            "and stock cannot be negative."
+        )
         return
 
     print("\nProduct Type")
